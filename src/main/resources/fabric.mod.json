@@ -1,0 +1,28 @@
+{
+	"schemaVersion": 1,
+	"id": "trimremoval",
+	"version": "${version}",
+	"name": "trimremoval",
+	"description": "Lets you remove trims from your armor by shift-right-clicking a grindstone",
+	"authors": [
+		"Ceedrich"
+	],
+	"contact": {
+		"homepage": "https://ceedri.ch",
+		"sources": "https://github.com/Ceedrich/trimRemoval"
+	},
+	"license": "Apache-2.0",
+	"icon": "assets/trimremoval/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.trimremoval.Trimremoval"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
