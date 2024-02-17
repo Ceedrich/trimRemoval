@@ -1,0 +1,46 @@
+name: Release on Github and Modrinth
+
+env:
+  MODRINTH_ID: qFDjQPIl
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: "temurin"
+          java-version: 17
+
+      - name: Make Gradle wrapper executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
+      - name: Build
+        run: ./gradlew clean build
+
+      - name: Publish
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          modrinth-id : ${{ env.MODRINTH_ID }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          files: build/libs/!(*-@(dev|sources|javadoc)).jar
+          changelog-file: CHANGELOG.md
